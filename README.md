@@ -11,3 +11,5 @@ Jesús Yael Gama Hernández.
 Joana Areli López Sánchez.
 
 Marcos Eduardo Hernández Moreno.
+
+Gael Alejandro Parra Herrera.
