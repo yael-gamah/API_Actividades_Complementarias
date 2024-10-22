@@ -5,12 +5,27 @@ use std::sync::Mutex;
 use log::info;
 use env_logger;
 
+// Enum para las actividades complementarias
+#[derive(Serialize, Deserialize, Clone, Debug)]
+enum ActividadComplementaria {
+    Tutorias,
+    DeportivasYCulturales,
+    ProyectosDeInvestigacion,
+    EventosAcademicos,
+    ProductividadLaboral,
+    Emprendedurismo,
+    ProyectosInterdisciplinarios,
+    PrototiposYDesarrolloTecnologico,
+    MedioAmbiente,
+    DefinidaPorComite(String), // Para actividades definidas por el comité
+}
+
 // Estructura para representar un estudiante
 #[derive(Serialize, Deserialize, Clone, Debug)]
 struct Estudiante {
     id: Uuid,
     nombre: String,
-    actividad: String,
+    actividad: ActividadComplementaria,
 }
 
 // Estado compartido de la aplicación para almacenar estudiantes
@@ -25,13 +40,14 @@ async fn obtener_estudiantes(estado: web::Data<EstadoApp>) -> impl Responder {
     HttpResponse::Ok().json(&*estudiantes)
 }
 
-// Handler para crear un nuevo estudiante
+// La estructura para crear un nuevo estudiante
 #[derive(Serialize, Deserialize, Debug)]
 struct EstudianteRequest {
     nombre: String,
-    actividad: String,
+    actividad: ActividadComplementaria,
 }
 
+// Handler para crear un nuevo estudiante
 async fn crear_estudiante(estudiante: web::Json<EstudianteRequest>, estado: web::Data<EstadoApp>) -> impl Responder {
     let mut estudiantes = estado.estudiantes.lock().unwrap();
 
@@ -100,7 +116,3 @@ async fn main() -> std::io::Result<()> {
     .run()
     .await
 }
-
-
-
-
