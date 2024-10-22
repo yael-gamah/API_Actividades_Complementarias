@@ -1,9 +1,20 @@
 [package]
-name = "API_Actividades_Complementarias"
+name = "act-com-api"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+<<<<<<< HEAD
 actix-web = "4.0.1"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+=======
+actix-web = "4.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+env_logger = "0.10"
+log = "0.4"
+
+
+>>>>>>> 957035ca8654a34571dcb46a2f90acb0ab1cece7
