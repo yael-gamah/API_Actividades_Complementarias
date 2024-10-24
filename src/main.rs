@@ -1,6 +1,6 @@
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use serde::{Deserialize, Serialize};
-use uuid::Uuid;
+use rand::Rng; // Importar la biblioteca rand
 use std::sync::Mutex;
 use log::info;
 use env_logger;
@@ -23,7 +23,7 @@ enum ActividadComplementaria {
 // Estructura para representar un estudiante
 #[derive(Serialize, Deserialize, Clone, Debug)]
 struct Estudiante {
-    id: Uuid,
+    numero_control: u32,  // Nuevo número de control de 8 dígitos
     nombre: String,
     apellido_paterno: String,
     apellido_materno: String,
@@ -44,6 +44,12 @@ struct EstadoApp {
     estudiantes: Mutex<Vec<Estudiante>>,
 }
 
+// Función para generar un número de control de 8 dígitos
+fn generar_numero_control() -> u32 {
+    let mut rng = rand::thread_rng();
+    rng.gen_range(10000000..99999999) // Genera un número entre 10000000 y 99999999
+}
+
 // Handler para obtener todos los estudiantes
 async fn obtener_estudiantes(estado: web::Data<EstadoApp>) -> impl Responder {
     let estudiantes = estado.estudiantes.lock().unwrap();
@@ -56,7 +62,7 @@ async fn crear_estudiante(estudiante: web::Json<EstudianteRequest>, estado: web:
     let mut estudiantes = estado.estudiantes.lock().unwrap();
 
     let nuevo_estudiante = Estudiante {
-        id: Uuid::new_v4(),
+        numero_control: generar_numero_control(),
         nombre: estudiante.nombre.clone(),
         apellido_paterno: estudiante.apellido_paterno.clone(),
         apellido_materno: estudiante.apellido_materno.clone(),
@@ -68,14 +74,14 @@ async fn crear_estudiante(estudiante: web::Json<EstudianteRequest>, estado: web:
     HttpResponse::Created().json(nuevo_estudiante)
 }
 
-// Handler para actualizar un estudiante
+// Handler para actualizar un estudiante por número de control
 async fn actualizar_estudiante(
-    estudiante_id: web::Path<Uuid>,
+    numero_control: web::Path<u32>,
     estudiante_actualizado: web::Json<EstudianteRequest>,
     estado: web::Data<EstadoApp>,
 ) -> impl Responder {
     let mut estudiantes = estado.estudiantes.lock().unwrap();
-    if let Some(estudiante) = estudiantes.iter_mut().find(|e| e.id == *estudiante_id) {
+    if let Some(estudiante) = estudiantes.iter_mut().find(|e| e.numero_control == *numero_control) {
         estudiante.nombre = estudiante_actualizado.nombre.clone();
         estudiante.apellido_paterno = estudiante_actualizado.apellido_paterno.clone();
         estudiante.apellido_materno = estudiante_actualizado.apellido_materno.clone();
@@ -87,12 +93,12 @@ async fn actualizar_estudiante(
     }
 }
 
-// Handler para eliminar un estudiante
-async fn eliminar_estudiante(estudiante_id: web::Path<Uuid>, estado: web::Data<EstadoApp>) -> impl Responder {
+// Handler para eliminar un estudiante por número de control
+async fn eliminar_estudiante(numero_control: web::Path<u32>, estado: web::Data<EstadoApp>) -> impl Responder {
     let mut estudiantes = estado.estudiantes.lock().unwrap();
-    if estudiantes.iter().any(|e| e.id == *estudiante_id) {
-        estudiantes.retain(|e| e.id != *estudiante_id);
-        info!("Estudiante eliminado con ID: {}", estudiante_id);
+    if estudiantes.iter().any(|e| e.numero_control == *numero_control) {
+        estudiantes.retain(|e| e.numero_control != *numero_control);
+        info!("Estudiante eliminado con número de control: {}", numero_control);
         HttpResponse::Ok().finish()
     } else {
         HttpResponse::NotFound().finish()
@@ -117,8 +123,8 @@ async fn main() -> std::io::Result<()> {
             .app_data(estado_app.clone())
             .route("/estudiantes", web::get().to(obtener_estudiantes))
             .route("/estudiantes", web::post().to(crear_estudiante))
-            .route("/estudiantes/{id}", web::put().to(actualizar_estudiante))
-            .route("/estudiantes/{id}", web::delete().to(eliminar_estudiante))
+            .route("/estudiantes/{numero_control}", web::put().to(actualizar_estudiante))
+            .route("/estudiantes/{numero_control}", web::delete().to(eliminar_estudiante))
     })
     .bind("127.0.0.1:8080")?
     .run()
