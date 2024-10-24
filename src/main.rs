@@ -25,6 +25,17 @@ enum ActividadComplementaria {
 struct Estudiante {
     id: Uuid,
     nombre: String,
+    apellido_paterno: String,
+    apellido_materno: String,
+    actividad: ActividadComplementaria,
+}
+
+// Estructura para la solicitud de creación de un estudiante
+#[derive(Serialize, Deserialize, Debug)]
+struct EstudianteRequest {
+    nombre: String,
+    apellido_paterno: String,
+    apellido_materno: String,
     actividad: ActividadComplementaria,
 }
 
@@ -40,13 +51,6 @@ async fn obtener_estudiantes(estado: web::Data<EstadoApp>) -> impl Responder {
     HttpResponse::Ok().json(&*estudiantes)
 }
 
-// La estructura para crear un nuevo estudiante
-#[derive(Serialize, Deserialize, Debug)]
-struct EstudianteRequest {
-    nombre: String,
-    actividad: ActividadComplementaria,
-}
-
 // Handler para crear un nuevo estudiante
 async fn crear_estudiante(estudiante: web::Json<EstudianteRequest>, estado: web::Data<EstadoApp>) -> impl Responder {
     let mut estudiantes = estado.estudiantes.lock().unwrap();
@@ -54,6 +58,8 @@ async fn crear_estudiante(estudiante: web::Json<EstudianteRequest>, estado: web:
     let nuevo_estudiante = Estudiante {
         id: Uuid::new_v4(),
         nombre: estudiante.nombre.clone(),
+        apellido_paterno: estudiante.apellido_paterno.clone(),
+        apellido_materno: estudiante.apellido_materno.clone(),
         actividad: estudiante.actividad.clone(),
     };
 
@@ -71,6 +77,8 @@ async fn actualizar_estudiante(
     let mut estudiantes = estado.estudiantes.lock().unwrap();
     if let Some(estudiante) = estudiantes.iter_mut().find(|e| e.id == *estudiante_id) {
         estudiante.nombre = estudiante_actualizado.nombre.clone();
+        estudiante.apellido_paterno = estudiante_actualizado.apellido_paterno.clone();
+        estudiante.apellido_materno = estudiante_actualizado.apellido_materno.clone();
         estudiante.actividad = estudiante_actualizado.actividad.clone();
         info!("Estudiante actualizado: {:?}", estudiante);
         HttpResponse::Ok().json(estudiante)
