@@ -103,7 +103,37 @@ async fn crear_estudiante(estudiante: web::Json<EstudianteRequest>, estado: web:
     HttpResponse::Created().json(nuevo_estudiante)
 }
 
-// (Los demás handlers no cambian)
+// Handler para actualizar un estudiante por número de control
+async fn actualizar_estudiante(
+    numero_control: web::Path<u32>,
+    estudiante_actualizado: web::Json<EstudianteRequest>,
+    estado: web::Data<EstadoApp>,
+) -> impl Responder {
+    let mut estudiantes = estado.estudiantes.lock().unwrap();
+    if let Some(estudiante) = estudiantes.iter_mut().find(|e| e.numero_control == *numero_control) {
+        estudiante.nombre = estudiante_actualizado.nombre.clone();
+        estudiante.apellido_paterno = estudiante_actualizado.apellido_paterno.clone();
+        estudiante.apellido_materno = estudiante_actualizado.apellido_materno.clone();
+        estudiante.actividad.tipo = estudiante_actualizado.tipo_actividad.clone();
+        estudiante.actividad.descripcion = obtener_descripcion(&estudiante_actualizado.tipo_actividad);
+        info!("Estudiante actualizado: {:?}", estudiante);
+        HttpResponse::Ok().json(estudiante)
+    } else {
+        HttpResponse::NotFound().finish()
+    }
+}
+
+// Handler para eliminar un estudiante por número de control
+async fn eliminar_estudiante(numero_control: web::Path<u32>, estado: web::Data<EstadoApp>) -> impl Responder {
+    let mut estudiantes = estado.estudiantes.lock().unwrap();
+    if estudiantes.iter().any(|e| e.numero_control == *numero_control) {
+        estudiantes.retain(|e| e.numero_control != *numero_control);
+        info!("Estudiante eliminado con número de control: {}", numero_control);
+        HttpResponse::Ok().finish()
+    } else {
+        HttpResponse::NotFound().finish()
+    }
+}
 
 // Función principal para configurar y ejecutar el servidor
 #[actix_web::main]
