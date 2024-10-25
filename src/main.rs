@@ -142,7 +142,7 @@ async fn main() -> std::io::Result<()> {
     env_logger::init();
 
     // Conectar a la base de datos MySQL
-    let database_url = "mysql://root@localhost/Actividades_Complementarias";
+    let database_url = "mysql://root:123@localhost/Actividades_Complementarias";
     let pool = MySqlPoolOptions::new()
         .max_connections(5)
         .connect(database_url)
