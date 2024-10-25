@@ -48,7 +48,7 @@ docker-compose up --build
 ```
 Esto construirá la imagen de la API y levantará los contenedores para la API y la base de datos.
 
-### 4. Acceder a la API
+### 3. Acceder a la API
 
 La API estará disponible en [http://localhost:8080](http://localhost:8080). Puedes probar las rutas usando herramientas como Postman, cURL o tu navegador web.
 
