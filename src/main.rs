@@ -142,7 +142,7 @@ async fn main() -> std::io::Result<()> {
     env_logger::init();
 
     // Conectar a la base de datos MySQL
-    let database_url = "mysql://root:123@localhost/Actividades_Complementarias";
+    let database_url = "mysql://root:123@database/Actividades_Complementarias"; // Cambiado 'localhost' por 'database'
     let pool = MySqlPoolOptions::new()
         .max_connections(5)
         .connect(database_url)
@@ -158,7 +158,7 @@ async fn main() -> std::io::Result<()> {
             .route("/actividades_complementarias/{numero_control}", web::put().to(actualizar_estudiante))
             .route("/actividades_complementarias/{numero_control}", web::delete().to(eliminar_estudiante))
     })
-    .bind("127.0.0.1:8080")?
+    .bind("0.0.0.0:8080")?  // Cambiado '127.0.0.1' por '0.0.0.0'
     .run()
     .await
 }
