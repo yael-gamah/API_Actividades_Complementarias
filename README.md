@@ -1,8 +1,8 @@
-#TÓPICOS PARA EL DESPLIEGUE DE APLICACIONES.
+# TÓPICOS PARA EL DESPLIEGUE DE APLICACIONES.
 
-##Creación de API REST utilizando RUST.
+## Creación de API REST utilizando RUST.
 
-###Integrantes del equipo:
+### Integrantes del equipo:
 
 Fernando de Jesús Barrón Mojica.
 
