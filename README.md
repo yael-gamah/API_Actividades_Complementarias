@@ -36,8 +36,8 @@ Esta es una API RESTful desarrollada en Rust para gestionar actividades compleme
 ### 1. Clonar el repositorio
 
    ```bash
-   git clone <URL-DEL-REPOSITORIO>
-   cd <NOMBRE-DEL-REPOSITORIO>
+   git clone https://github.com/yael-gamah/API_Actividades_Complementarias.git
+   cd API_Actividades_Complementarias
   ```
 ### 2. Construir y ejecutar la API con Docker
 
