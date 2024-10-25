@@ -16,7 +16,7 @@
 
 # API de Actividades Complementarias
 
-Esta es una API RESTful desarrollada en Rust para gestionar actividades complementarias de estudiantes del Instituto Tecnológico de León, como tutorías, deportes, proyectos de investigación, entre otros. La API se ejecuta en un entorno Docker junto con una base de datos MySQL.
+Esta es una API REST desarrollada en Rust para gestionar actividades complementarias de estudiantes del Instituto Tecnológico de León, como tutorías, deportes, proyectos de investigación, entre otros. La API se ejecuta en un entorno Docker junto con una base de datos MySQL.
 
 ## Características
 
