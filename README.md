@@ -50,7 +50,7 @@ Esto construirá la imagen de la API y levantará los contenedores para la API y
 
 ### 3. Acceder a la API
 
-La API estará disponible en [http://localhost:8080](http://localhost:8080). Puedes probar las rutas usando herramientas como Postman, cURL o tu navegador web.
+La API estará disponible en [http://localhost:8080](http://localhost:5050). Puedes probar las rutas usando herramientas como Postman, cURL o tu navegador web.
 
 #### Endpoints
 
