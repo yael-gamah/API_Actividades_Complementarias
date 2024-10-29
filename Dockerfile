@@ -16,7 +16,7 @@ COPY . .
 RUN cargo build
 
 # Establece el puerto expuesto por la aplicación
-EXPOSE 8080
+EXPOSE 5050
 
 # Comando para ejecutar la aplicación
 CMD ["cargo", "run"]
