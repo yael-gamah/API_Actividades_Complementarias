@@ -158,7 +158,7 @@ async fn main() -> std::io::Result<()> {
             .route("/actividades_complementarias/{numero_control}", web::put().to(actualizar_estudiante))
             .route("/actividades_complementarias/{numero_control}", web::delete().to(eliminar_estudiante))
     })
-    .bind("0.0.0.0:8080")?  // Cambiado '127.0.0.1' por '0.0.0.0'
+    .bind("0.0.0.0:5050")?  // Cambiado '127.0.0.1' por '0.0.0.0'
     .run()
     .await
 }
