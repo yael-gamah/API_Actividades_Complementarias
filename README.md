@@ -105,7 +105,7 @@ docker run --rm -u root -p 8080:8080 \
   --name jenkins_server jenkins/jenkins:lts
 ```
 
-![JENKINS RUN]([https://example.com/path/to/image.png](https://drive.google.com/file/d/1no8YCvZMT_2c2gB6C-__s8P5gHLHSWbH/view?usp=sharing))
+![JENKINS RUN](https://drive.google.com/file/d/1no8YCvZMT_2c2gB6C-__s8P5gHLHSWbH/view?usp=sharing)
 
 
 
