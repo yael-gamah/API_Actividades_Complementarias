@@ -105,13 +105,66 @@ docker run --rm -u root -p 8080:8080 \
   --name jenkins_server jenkins/jenkins:lts
 ```
 
-![Build Successful](https://drive.google.com/uc?export=view&id=1no8YCvZMT_2c2gB6C-__s8P5gHLHSWbH)
+![Build Successful](https://drive.google.com/uc?export=view&id=1LqE2TOtZTGDOUtPkBe452ZCk09LXBBAD)
 
+## 2. Acceder a Jenkins
+Una vez iniciado Jenkins, abre tu navegador web y ve a la URL [http://localhost:8080](http://localhost:8080). Inicia sesión con el usuario y contraseña de administrador.
 
+[Inicio Jenkins](https://drive.google.com/uc?id=1voL3BjQrJnZjx9pDZeaHsvCu88QNDu7_)
 
+## 3. Crear un Nuevo Proyecto en Jenkins
+1. Desde el panel de control de Jenkins, haz clic en “Nuevo Tarea”.
+2. Asigna un nombre al proyecto, como "BuildApi", y selecciona **Crear un proyecto de estilo libre**.
+3. Haz clic en "OK" para crear el proyecto.
 
+[Crear proyecto](https://drive.google.com/uc?id=1rhmBBtmAwTEqSRLjLaddKwOsCTJVWWwZ)
 
+## 4. Configurar el Proyecto en Jenkins
 
+### Descripción del Proyecto
+En la sección "General", añade una descripción al proyecto, como "API de Actividades Complementarias", para facilitar su identificación.
 
+[Agregar descripción](https://drive.google.com/uc?id=1SrqlqQ6ba5RL5BDbkxW1R_c2z_X119gW)
 
+### Configurar el Código Fuente
+1. En la sección **Origen del Código Fuente**, selecciona la opción **Git**.
+2. En el campo "Repository URL", ingresa la URL del repositorio de la API en GitHub: [https://github.com/yael-gamah/API_Actividades_Complementarias.git](https://github.com/yael-gamah/API_Actividades_Complementarias.git)
+3. Añade las credenciales necesarias para acceder al repositorio.
 
+![Configuración código](https://drive.google.com/uc?id=1TGP-KkBXwljmxeUu32zHB_rwacmzQp93)
+
+4. Especifica la rama a construir. En este caso, utiliza `*/main` para indicar la rama principal.
+
+![Rama main](https://drive.google.com/uc?id=1P6x_JtgrXaJolgySs2a505dkebO2LOzU)
+
+### Añadir un Paso de Construcción
+1. En la sección **Construir**, añade un nuevo paso para **Ejecutar línea de comandos (shell)**.
+2. Añade los siguientes comandos para construir la imagen Docker y levantar los contenedores:
+
+```bash
+# Construir la imagen Docker
+docker-compose build
+
+# Levantar los contenedores
+docker-compose up -d
+```
+![Construcción](https://drive.google.com/uc?id=1phu9oY2hEfSg9ZrBpvYB8HFKqSAVnxPJ)
+
+3. Haz clic en Guardar para aplicar los cambios.
+   
+## 5. Ejecutar el Proyecto en Jenkins
+1. En el panel del proyecto, haz clic en **Construir ahora** para iniciar la compilación y despliegue de la API.
+
+![Construir ahora](https://drive.google.com/uc?id=1RfAiCes9HueaivFIo9Gn785cEYC0DQmP)
+
+2. Ve a la **Salida de Consola** para monitorear el progreso y asegurarte de que la compilación y el despliegue se realicen sin problemas.
+
+![Salida de consola](https://drive.google.com/uc?id=1zyK6Xx86153SkuP_aNiQr3ifKxB3Kg8P)
+![Salida de consola](https://drive.google.com/uc?id=1bWxbR29ar3wEPHBY6QxyzAtQ_2xE-sDH)
+
+## 6. Verificar la Respuesta de la API en el Navegador:
+Para confirmar que la API esté respondiendo correctamente, abre tu navegador web y visita la siguiente URL: [http://localhost:5050/actividades_complementarias](http://localhost:5050/actividades_complementarias)
+
+Deberías ver una respuesta en formato JSON con la lista de estudiantes y sus actividades, similar a la siguiente:
+
+![Respuesta API](https://drive.google.com/uc?id=1_GPY0brJoh537RsyHxhqY1TuDlIXE-Zv)
