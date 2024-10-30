@@ -110,21 +110,21 @@ docker run --rm -u root -p 8080:8080 \
 ## 2. Acceder a Jenkins
 Una vez iniciado Jenkins, abre tu navegador web y ve a la URL [http://localhost:8080](http://localhost:8080). Inicia sesión con el usuario y contraseña de administrador.
 
-[Inicio Jenkins](https://drive.google.com/uc?id=1voL3BjQrJnZjx9pDZeaHsvCu88QNDu7_)
+![Inicio Jenkins](https://drive.google.com/uc?id=1voL3BjQrJnZjx9pDZeaHsvCu88QNDu7_)
 
 ## 3. Crear un Nuevo Proyecto en Jenkins
 1. Desde el panel de control de Jenkins, haz clic en “Nuevo Tarea”.
 2. Asigna un nombre al proyecto, como "BuildApi", y selecciona **Crear un proyecto de estilo libre**.
 3. Haz clic en "OK" para crear el proyecto.
 
-[Crear proyecto](https://drive.google.com/uc?id=1rhmBBtmAwTEqSRLjLaddKwOsCTJVWWwZ)
+![Crear proyecto](https://drive.google.com/uc?id=1rhmBBtmAwTEqSRLjLaddKwOsCTJVWWwZ)
 
 ## 4. Configurar el Proyecto en Jenkins
 
 ### Descripción del Proyecto
 En la sección "General", añade una descripción al proyecto, como "API de Actividades Complementarias", para facilitar su identificación.
 
-[Agregar descripción](https://drive.google.com/uc?id=1SrqlqQ6ba5RL5BDbkxW1R_c2z_X119gW)
+![Agregar descripción](https://drive.google.com/uc?id=1SrqlqQ6ba5RL5BDbkxW1R_c2z_X119gW)
 
 ### Configurar el Código Fuente
 1. En la sección **Origen del Código Fuente**, selecciona la opción **Git**.
