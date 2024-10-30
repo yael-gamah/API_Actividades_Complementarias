@@ -105,7 +105,7 @@ docker run --rm -u root -p 8080:8080 \
   --name jenkins_server jenkins/jenkins:lts
 ```
 
-![JENKINS RUN](https://drive.google.com/file/d/1no8YCvZMT_2c2gB6C-__s8P5gHLHSWbH/view?usp=sharing)
+![Build Successful](https://drive.google.com/uc?export=view&id=1no8YCvZMT_2c2gB6C-__s8P5gHLHSWbH)
 
 
 
