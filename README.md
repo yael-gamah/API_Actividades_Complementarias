@@ -91,6 +91,24 @@ La API estará disponible en [http://localhost:5050](http://localhost:5050). Pue
 - **Descripción:** Elimina el registro de un estudiante de la base de datos basado en su `numero_control`.
 
 
+# Pruebas de la API en Jenkins
+
+### 1. Iniciar Jenkins en un Contenedor Docker
+
+Ejecuta el siguiente comando en la terminal de PowerShell (Windows) para iniciar Jenkins en un contenedor Docker:
+
+```bash
+docker run --rm -u root -p 8080:8080 \
+  -v jenkins-data:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v ${HOME}:/home \
+  --name jenkins_server jenkins/jenkins:lts
+```
+
+![JENKINS RUN]([https://example.com/path/to/image.png](https://drive.google.com/file/d/1no8YCvZMT_2c2gB6C-__s8P5gHLHSWbH/view?usp=sharing))
+
+
+
 
 
 
