@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  labels:
+    app: api
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api-container
+        image: fernandobarronfx/api_actividades_complementarias:latest
+        ports:
+        - containerPort: 5050
+        env:
+        - name: DATABASE_URL
+          value: "mysql://root:123@database:3306/Actividades_Complementarias"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  selector:
+    app: api
+  ports:
+  - protocol: TCP
+    port: 5050
+    targetPort: 5050
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment
+  labels:
+    app: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123"
+        - name: MYSQL_DATABASE
+          value: "Actividades_Complementarias"
+        volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d
+          name: db-init-scripts
+      volumes:
+      - name: db-init-scripts
+        configMap:
+          name: db-init-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+spec:
+  selector:
+    app: database
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-init-configmap
+data:
+  init.sql: |
+    -- Crear la base de datos si no existe
+    CREATE DATABASE IF NOT EXISTS Actividades_Complementarias;
+
+    -- Usar la base de datos
+    USE Actividades_Complementarias;
+
+    -- Crear la tabla estudiantes si no existe
+    CREATE TABLE IF NOT EXISTS estudiantes (
+        numero_control INT PRIMARY KEY,
+        nombre VARCHAR(50),
+        apellido_paterno VARCHAR(50),
+        apellido_materno VARCHAR(50),
+        tipo_actividad VARCHAR(100),
+        descripcion VARCHAR(255)
+    );
+
+    -- Insertar 10 registros de prueba en la tabla estudiantes
+    INSERT INTO estudiantes (numero_control, nombre, apellido_paterno, apellido_materno, tipo_actividad, descripcion) VALUES
+    (12345678, 'Juan', 'Pérez', 'Gómez', 'Tutorias', 'Sesiones de asesoramiento con profesores.'),
+    (23456789, 'María', 'López', 'Martínez', 'DeportivasYCulturales', 'Actividades deportivas y culturales.'),
+    (34567890, 'Carlos', 'Hernández', 'Ruiz', 'ProyectosDeInvestigacion', 'Participación en proyectos de investigación.'),
+    (45678901, 'Ana', 'Ramírez', 'Sánchez', 'EventosAcademicos', 'Participación en eventos académicos.'),
+    (56789012, 'Luis', 'García', 'Torres', 'ProductividadLaboral', 'Actividades de productividad laboral.'),
+    (67890123, 'Gabriela', 'Flores', 'Morales', 'Emprendedurismo', 'Actividades de emprendimiento.'),
+    (78901234, 'Miguel', 'Ríos', 'Vargas', 'ProyectosInterdisciplinarios', 'Proyectos interdisciplinarios.'),
+    (89012345, 'Laura', 'Jiménez', 'Ortega', 'PrototiposYDesarrolloTecnologico', 'Desarrollo de prototipos tecnológicos.'),
+    (90123456, 'Daniel', 'Castillo', 'Hernández', 'MedioAmbiente', 'Actividades de conservación del medio ambiente.'),
+    (10123456, 'Sofía', 'Mendoza', 'Aguilar', 'Tutorias', 'Sesiones de asesoramiento con profesores.');
