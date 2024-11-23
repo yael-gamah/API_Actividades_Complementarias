@@ -168,3 +168,39 @@ Para confirmar que la API esté respondiendo correctamente, abre tu navegador we
 Deberías ver una respuesta en formato JSON con la lista de estudiantes y sus actividades, similar a la siguiente:
 
 ![Respuesta API](https://drive.google.com/uc?id=1_GPY0brJoh537RsyHxhqY1TuDlIXE-Zv)
+
+# Despliegue del API en kubernetes
+
+## Aplica tus archivos de configuración
+
+### En la terminal de comandos, y ubicados en la carpeta raíz del proyecto, aplica el archivo deployment.yaml para desplegar la aplicación y la base de datos.
+
+```bash
+kubectl apply -f deployment.yaml
+```
+
+### Puedes verificar que los pods están corriendo con:
+```bash
+kubectl get pods
+```
+
+## Exponer tu servicio
+
+### Si necesitas acceder a tu aplicación desde el navegador o Postman, debes exponer el servicio. Usa este comando para obtener la URL del servicio expuesto:
+
+```bash
+minikube service api-service --url
+```
+### Esto mostrará algo como:
+
+```bash
+[minikube service api-service --url](http://127.0.0.1:53030)
+```
+## Verifica el estado de los Pods y Servicios
+
+### Asegúrate de que todos los pods estén en estado Running y el servicio esté correctamente configurado:
+
+```bash
+kubectl get pods
+kubectl get services
+```
